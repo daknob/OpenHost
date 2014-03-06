@@ -1,0 +1,13 @@
+The OpenHost Project
+This service operates 24/7 and checks all computers storing data about their uptime.
+For more info, contact daknob@tolabaki.gr
+
+Please do not interrupt the service.
+
+DOCUMENTATION:
+/uptimes/    ::: Amount of pings each host replied to
+check.py     ::: Operating Python Script
+README       ::: The current text file
+hosts        ::: All hosts to be checked by the script
+session      ::: Total rounds of sent pings
+getstats.py  ::: Print the uptime of each host
