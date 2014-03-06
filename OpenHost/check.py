@@ -1,5 +1,5 @@
 #The OpenHost Project
-#csd3235@csd.uoc.gr
+#daknob@tolabaki.gr
 
 import os
 import time
