@@ -25,10 +25,15 @@ while(1):
 			#Alive
 			f = open("uptimes/"+host, "w+")
 			f.write(str(pingd))
-			f.close()	
+			f.close()
+			os.system("/bin/echo 1 > status/" + host)
 		else:
 			#Dead
-			pass
+			f = open("status/" + host)
+			if (f.read() == "1\n"):
+				f.close()
+				os.system("echo \"The host '" + host + "' appears to be offline.\" | mail -s \"[OpenHost] Host offline\" daknob@tolabaki.gr")
+			os.system("/bin/echo 0 > status/" + host)
 	time.sleep(60)
 
 print("Hang up")

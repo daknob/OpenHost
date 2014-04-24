@@ -1,0 +1,5 @@
+printf "Killing previous daemons.."
+killall -9 python
+printf "\rInitializing daemon..."
+nohup python check.py > /dev/null 2> /dev/null &
+printf "\rDone!\n"

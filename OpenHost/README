@@ -1,13 +1,30 @@
 The OpenHost Project
-This service operates 24/7 and checks all computers storing data about their uptime.
+This service operates 24/7 and checks all lab computers storing data about their uptime.
 For more info, contact daknob@tolabaki.gr
 
 Please do not interrupt the service.
 
+INFO:
+The OpenHost project, created by DaKnOb for the Computer Science Department at the University of Crete is a host monitoring tool that measures the uptime percentage of each host on the network, the logged in users, the status (online/offline) and also whether a remote filesystem is mounted or has been unmounted. It also has support for e-mailing a user either when a host goes down or when a filesystem has been unmounted. 
+
 DOCUMENTATION:
-/uptimes/    ::: Amount of pings each host replied to
-check.py     ::: Operating Python Script
-README       ::: The current text file
-hosts        ::: All hosts to be checked by the script
-session      ::: Total rounds of sent pings
-getstats.py  ::: Print the uptime of each host
+uptimes/    	::: Amount of pings each host replied to
+check.py     	::: Operating Python Script
+README       	::: The current text file
+hosts        	::: All hosts to be checked by the script
+session      	::: Total rounds of sent pings
+getstats.py  	::: Print the uptime of each host
+index.php	 	::: Show a good looking webpage of all the information
+status/			:::	An indicator on whether a host is online or offline
+uid/			::: Amount of users logged in to each host
+userd			:::	Client on all monitored machines
+init			::: Bash script to run daemon on monitoring server
+
+Setup:
+This script can monitor an unlimited amount of hosts with the following characteristics:
+1. Every host has a common filesystem mounted in a particular directory (same for all hosts)
+2. One of the hosts (the server) executes ./init. (Prefer one with uninterruptible uptime)
+3. One of the hosts has a webserver with PHP so the "OpenHost" folder is accessible to the web.
+4. Every host has a cron job that executes /userd every one minute. 
+5. You did not move ANY file to ANY OTHER DIRECTORY.
+6. You have mail/sendmail set up to send e-mails.
