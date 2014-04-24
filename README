@@ -13,7 +13,7 @@ check.py      ::: Operating Python Script
 README        ::: The current text file
 hosts         ::: All hosts to be checked by the script
 session       ::: Total rounds of sent pings
-getstats.py  	::: Print the uptime of each host
+getstats.py   ::: Print the uptime of each host
 index.php     ::: Show a good looking webpage of all the information
 status/       :::	An indicator on whether a host is online or offline
 uid/          ::: Amount of users logged in to each host
