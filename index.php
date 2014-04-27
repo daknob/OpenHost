@@ -60,7 +60,7 @@
 ?>
 <html>
 	<head>
-		<title>UpTime</title>
+		<title>OpenHost :: DaKnOb</title>
 		<style>
 			body{
 				background-color:rgb(240,240,240);
