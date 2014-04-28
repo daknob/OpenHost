@@ -21,11 +21,12 @@
 	foreach ($hsts as $host) {
 		if ($host=="")continue;
 		$pcnt = round(100 * intval(file_get_contents("uptimes/$host")) / intval($checks), 2);
+		$size = round($pcnt, 0);
 		$r = round(255-$pcnt*2.5,0);
 		$g = round($pcnt*2.5,0);
 		$b = 0;	/* Future Support */
 		$live = file_get_contents("status/$host");
-		$output = $output . "<tr><td style='background-color:rgb(220,220,220);'>$host</td><td style='color:#fff;background-color:rgb($r,$g,$b);'>" . $pcnt  . "%</td>";
+		$output = $output . "<tr><td style='background-color:rgb(220,220,220);'>$host</td><td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #00aa00 0%, #00aa00 $size%, #cc0000 $size    %, #cc0000 100%);background: -webkit-linear-gradient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#00aa00), col    or-stop($size%,#00aa00), color-stop($size%,#cc0000), color-stop(100%,#cc0000)); background: -o-linear-gradient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: -ms-linear-grad    ient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: linear-gradient(to right, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background-color:rgb($r, $g, 0); '>" . $pcnt  . "%</td>";
 		if($live=="1\n"){
 			$output = $output . "<td style='color:#fff;background-color:#0a0;'>Online</td>";
 		}else{
@@ -34,9 +35,11 @@
 		$users = file_get_contents("uid/$host");
 		$r = round( intval($users) * 12.5  ,0);
 		$g = round( 255 - intval($users) * 12.5  ,0);
-		$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,$b);'>$users</td>";
+		$size = round(100 * $users / 20,0);
+		$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #cc0000 0%, #cc0000 $size%, #00aa00 $size    %, #00aa00 100%);background: -webkit-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cc0000), col    or-stop($size%,#cc0000), color-stop($size%,#00aa00), color-stop(100%,#00aa00)); background: -o-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -ms-linear-grad    ient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: linear-gradient(to right, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background-color:rgb($r, $g, 0); '>$users</td>";
 		
-		if($host == "hostwithoutmount1" || $host == "hostwithoutmount2" || $host == "host3"){
+		if($host == "host1" || $host == "host2" || $host == "host3"){
+			/* Hosts that normally do not have the FS mounted */
 			$output = $output . "<td style='color:#fff;background-color:#e18e00;'>Unmounted</td>";
 		}elseif($tm - filemtime("uid/$host") > 120){
 			$output = $output . "<td style='color:#fff;background-color:#a00;'>Unmounted<br/>(Since " . date("d/m/Y G:i:s",filemtime("uid/$host"))  .")</td>";
@@ -49,9 +52,10 @@
 			if($f[0] == 0){
 				$output .= "<td style='color:#fff;background-color:#e18e00;'>?</td>";
 			}else{
+				$size = round(100 * floatval($f[0]) / floatval($f[1]),0);
 				$g = round(255 * floatval($f[0]) / floatval($f[1]),0);
-				$r = 255-$g;
-				$output .= "<td style='color:#fff;background-color:rgb($r,$g,0);'>$f[0] / $f[1] GB</td>";
+				$r = 255 - $g;
+				$output .= "<td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #00aa00 0%, #00aa00 $size%, #cc0000 $size%, #cc0000 100%);background: -webkit-linear-gradient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#00aa00), color-stop($size%,#00aa00), color-stop($size%,#cc0000), color-stop(100%,#cc0000)); background: -o-linear-gradient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: -ms-linear-gradient(left, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background: linear-gradient(to right, #00aa00 0%,#00aa00 $size%,#cc0000 $size%,#cc0000 100%); background-color:rgb($r, $g, 0); '>$f[0] / $f[1] GB</td>";
 			}
 		}catch (Exception $err){
 			$output .= "<td style='color:#fff;background-color:#aa0;'>?</td>";
@@ -86,6 +90,7 @@
 			td{
 				padding:2px;
 				text-align:center;
+				margin-left:2px;
 			}
 		</style>
 	</head>
