@@ -16,7 +16,7 @@
 	$hosts	= file_get_contents("hosts");
 	$hsts 	= explode("\n", $hosts);
 	unset($hosts);
-	$output = "<table><tr><th style='background-color:rgb(200,200,200);'>Hostname</th><th style='background-color:rgb(200,200,200);'>Uptime</th><th>Status</th><th>Users</th><th>Filesystem</th></tr>";
+	$output = "<table><tr><th style='background-color:rgb(200,200,200);'>Hostname</th><th style='background-color:rgb(200,200,200);'>Uptime</th><th>Status</th><th>Users</th><th>Filesystem</th><th>RAM</th></tr>";
 	$tm = time();
 	foreach ($hsts as $host) {
 		if ($host=="")continue;
@@ -36,19 +36,30 @@
 		$g = round( 255 - intval($users) * 12.5  ,0);
 		$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,$b);'>$users</td>";
 		
-		if($host == "hostwithoutmount1" || $host == "hostwithoutmount2" || $host == "host3"){	/* Enter hosts that do not have a mounted fs */
-			$output = $output . "<td style='color:#fff;background-color:#aa0;'>Unmounted</td>";
+		if($host == "hostwithoutmount1" || $host == "hostwithoutmount2" || $host == "host3"){
+			$output = $output . "<td style='color:#fff;background-color:#e18e00;'>Unmounted</td>";
 		}elseif($tm - filemtime("uid/$host") > 120){
 			$output = $output . "<td style='color:#fff;background-color:#a00;'>Unmounted<br/>(Since " . date("d/m/Y G:i:s",filemtime("uid/$host"))  .")</td>";
 		}else{
 			$output = $output . "<td style='color:#fff;background-color:#0a0;'>Mounted</td>";	
 		}
-		
-		
+	
+		try{
+			$f = explode("@", file_get_contents("ram/$host"));
+			if($f[0] == 0){
+				$output .= "<td style='color:#fff;background-color:#e18e00;'>?</td>";
+			}else{
+				$g = round(255 * floatval($f[0]) / floatval($f[1]),0);
+				$r = 255-$g;
+				$output .= "<td style='color:#fff;background-color:rgb($r,$g,0);'>$f[0] / $f[1] GB</td>";
+			}
+		}catch (Exception $err){
+			$output .= "<td style='color:#fff;background-color:#aa0;'>?</td>";
+		}
 
 		$output = $output . "</tr>";
 }
-	$output = $output . "<tr><th style='background-color:rgb(200,200,200);'>Checks</th><td style='background-color:#5ac8fb' colspan='4'>$checks</td></tr></table>";
+	$output = $output . "<tr><th style='background-color:rgb(200,200,200);'>Checks</th><td style='background-color:#5ac8fb' colspan='5'>$checks</td></tr></table>";
 
 	/* 
 		Psst! Still here?

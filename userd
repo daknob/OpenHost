@@ -14,3 +14,24 @@ out = open("/path/to/OpenHost/uid/" + socket.gethostname(), "w+")
 out.write(str(len(ru)-1))
 out.close()
 #Saving users to array because we might need them in the future..
+
+o = open("/proc/meminfo", "r")
+o = o.read()
+o = o.split("\n")
+tr = o[0]
+fr = o[1]
+tr = tr.split(" ")
+tr = tr[::-1]
+tr = tr[1]
+tr = round(float(tr)/1024.0/1024.0, 2)
+
+fr = fr.split(" ")
+fr = fr[::-1]
+fr = fr[1]
+fr = round(float(fr)/1024.0/1024.0, 2)
+
+synth = str(fr) + "@" + str(tr)
+
+o = open("/path/to/OpenHost/ram/" + socket.gethostname(), "w+")
+o.write(synth)
+o.close()

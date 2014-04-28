@@ -19,6 +19,7 @@ status/       ::: An indicator on whether a host is online or offline
 uid/          ::: Amount of users logged in to each host
 userd         ::: Client on all monitored machines
 init          ::: Bash script to run daemon on monitoring server
+ram/		  ::: Amount of free and total RAM per host
 
 Setup:
 This script can monitor an unlimited amount of hosts with the following characteristics:
@@ -28,3 +29,4 @@ This script can monitor an unlimited amount of hosts with the following characte
 4. Every host has a cron job that executes /userd every one minute. 
 5. You did not move ANY file to ANY OTHER DIRECTORY.
 6. You have mail/sendmail set up to send e-mails.
+7. Your OS has /proc/meminfo readable by the user
