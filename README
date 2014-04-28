@@ -5,7 +5,12 @@ For more info, contact daknob@tolabaki.gr
 Please do not interrupt the service.
 
 INFO:
-The OpenHost project, created by DaKnOb for the Computer Science Department at the University of Crete is a host monitoring tool that measures the uptime percentage of each host on the network, the logged in users, the status (online/offline) and also whether a remote filesystem is mounted or has been unmounted. It also has support for e-mailing a user either when a host goes down or when a filesystem has been unmounted. 
+The OpenHost project, created by DaKnOb for the Computer Science Department at the 
+University of Crete is a host monitoring tool that measures the uptime percentage of 
+each host on the network, the logged in users, the status (online/offline),
+whether a remote filesystem is mounted or has been unmounted and also the total and 
+available RAM. It also has support for e-mailing a user either when a host goes down 
+or when a filesystem has been unmounted. 
 
 DOCUMENTATION:
 uptimes/      ::: Amount of pings each host replied to
