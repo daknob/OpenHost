@@ -73,6 +73,8 @@
 		mobile phone now :)
 	*/
 ?>
+
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>OpenHost :: DaKnOb</title>
@@ -85,10 +87,11 @@
 				color:rgb(55,200,0);
 			}
 			th{
+				padding:2px 4px;
 				background-color:rgb(200,200,200);
 			}
 			td{
-				padding:2px;
+				padding:2px 4px;
 				text-align:center;
 				margin-left:2px;
 			}
