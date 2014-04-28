@@ -19,7 +19,7 @@ status/       ::: An indicator on whether a host is online or offline
 uid/          ::: Amount of users logged in to each host
 userd         ::: Client on all monitored machines
 init          ::: Bash script to run daemon on monitoring server
-ram/		  ::: Amount of free and total RAM per host
+ram/          ::: Amount of free and total RAM per host
 
 Setup:
 This script can monitor an unlimited amount of hosts with the following characteristics:
