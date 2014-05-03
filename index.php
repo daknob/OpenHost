@@ -16,7 +16,7 @@
 	$hosts	= file_get_contents("hosts");
 	$hsts 	= explode("\n", $hosts);
 	unset($hosts);
-	$output = "<table><tr><th style='background-color:rgb(200,200,200);'>Hostname</th><th style='background-color:rgb(200,200,200);'>Uptime</th><th>Status</th><th>Users</th><th>Filesystem</th><th>RAM</th></tr>";
+	$output = "<table><tr><th style='background-color:rgb(200,200,200);'>Hostname</th><th style='background-color:rgb(200,200,200);'>Uptime</th><th>Status</th><th>Users</th><th>Filesystem</th><th>CPU Usage</th><th>RAM</th></tr>";
 	$tm = time();
 	foreach ($hsts as $host) {
 		if ($host=="")continue;
@@ -36,17 +36,31 @@
 		$r = round( intval($users) * 12.5  ,0);
 		$g = round( 255 - intval($users) * 12.5  ,0);
 		$size = round(100 * $users / 20,0);
-		$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #cc0000 0%, #cc0000 $size%, #00aa00 $size    %, #00aa00 100%);background: -webkit-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cc0000), col    or-stop($size%,#cc0000), color-stop($size%,#00aa00), color-stop(100%,#00aa00)); background: -o-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -ms-linear-grad    ient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: linear-gradient(to right, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background-color:rgb($r, $g, 0); '>$users</td>";
+		if ($host == "host1" || $host == "host2" || $host =="host3"){
+			$output .= "<td style='color:#fff;background-color:e18e00;'>?</td>";
+		}else{
+			$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #cc0000 0%, #cc0000 $size%, #00aa00 $size    %, #00aa00 100%);background: -webkit-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cc0000), col    or-stop($size%,#cc0000), color-stop($size%,#00aa00), color-stop(100%,#00aa00)); background: -o-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -ms-linear-grad    ient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: linear-gradient(to right, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background-color:rgb($r, $g, 0); '>$users</td>";
+		}
 		
 		if($host == "host1" || $host == "host2" || $host == "host3"){
-			/* Hosts that normally do not have the FS mounted */
 			$output = $output . "<td style='color:#fff;background-color:#e18e00;'>Unmounted</td>";
 		}elseif($tm - filemtime("uid/$host") > 120){
 			$output = $output . "<td style='color:#fff;background-color:#a00;'>Unmounted<br/>(Since " . date("d/m/Y G:i:s",filemtime("uid/$host"))  .")</td>";
 		}else{
 			$output = $output . "<td style='color:#fff;background-color:#0a0;'>Mounted</td>";	
 		}
-	
+		
+		if($host != 'host1' && $host != 'host2' && $host != 'host3'){
+			
+			$f = file_get_contents("cpu/$host");
+			$size = round(floatval($f), 0);
+			$r = round(2.5 * $f  ,0);
+			$g = 255-$r;
+			$output = $output . "<td style='color:#fff;background-color:rgb($r,$g,0);background:rgb($r,$g,0);background: -moz-linear-gradient(left, #cc0000 0%, #cc0000 $size%, #00aa00 $size    %,     #00aa00 100%);background: -webkit-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -webkit-gradient(linear, left top, right top, color-stop(0%,#cc0000), col        or-stop($size%,#cc0000), color-stop($size%,#00aa00), color-stop(100%,#00aa00)); background: -o-linear-gradient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: -ms-linear-gra    d    ient(left, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background: linear-gradient(to right, #cc0000 0%,#cc0000 $size%,#00aa00 $size%,#00aa00 100%); background-color:rgb($r, $g, 0); '    >$f%</td>";
+		}else{
+			$output .= "<td style='color:#fff;background-color:#e18e00'>?</td>";
+		}
+
 		try{
 			$f = explode("@", file_get_contents("ram/$host"));
 			if($f[0] == 0){
@@ -63,7 +77,7 @@
 
 		$output = $output . "</tr>";
 }
-	$output = $output . "<tr><th style='background-color:rgb(200,200,200);'>Checks</th><td style='background-color:#5ac8fb' colspan='5'>$checks</td></tr></table>";
+	$output = $output . "<tr><th style='background-color:rgb(200,200,200);'>Checks</th><td style='background-color:#5ac8fb' colspan='6'>$checks</td></tr></table>";
 
 	/* 
 		Psst! Still here?
