@@ -1,5 +1,5 @@
 #OpenHost Project
-#daknob@tolabaki.gr
+#daknob.mac@gmail.com
 
 def getint(filep):
 	f = open(filep, "a+")
