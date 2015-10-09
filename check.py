@@ -32,7 +32,7 @@ while(1):
 			f = open("status/" + host)
 			if (f.read() == "1\n"):
 				f.close()
-				os.system("echo \"The host '" + host + "' appears to be offline.\" | mail -s \"[OpenHost] Host offline\" daknob@tolabaki.gr")
+				os.system("echo \"The host '" + host + "' appears to be offline.\" | mail -s \"[OpenHost] Host offline\" your@e-mail.here")
 			os.system("/bin/echo 0 > status/" + host)
 	time.sleep(60)
 
