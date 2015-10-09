@@ -1,5 +1,5 @@
 #The OpenHost Project
-#daknob@tolabaki.gr
+#daknob.mac@gmail.com
 
 import os
 import time
