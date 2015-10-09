@@ -2,7 +2,7 @@
 import os,subprocess,socket
 
 #	The OpenHost Project
-#	 daknob@tolabaki.gr
+#	daknob.mac@gmail.com
 
 o = subprocess.Popen("who", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 o,e = o.communicate()
